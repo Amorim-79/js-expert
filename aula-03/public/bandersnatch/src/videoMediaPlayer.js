@@ -35,7 +35,7 @@ class VideoMediaPlayer {
  }
 
  sourceOpenWrapper(mediaSource) {
-    return async() => {
+    return async(_) => {
         this.sourceBuffer = mediaSource.addSourceBuffer(this.manifestJSON.codec);
         const selected = this.selected = this.manifestJSON.intro;
 
@@ -99,7 +99,7 @@ class VideoMediaPlayer {
     console.log(fileResolution);
     const prepareUrl = {
         url,
-        fileResolution: fileResolution,
+        fileResolution,
         fileResolutionTag: this.manifestJSON.fileResolutionTag,
         hostTag: this.manifestJSON.hostTag,
     };
@@ -120,7 +120,7 @@ class VideoMediaPlayer {
     sourceBuffer.appendBuffer(allSegments);
 
     return new Promise((resolve, reject) => {
-        const updateEnd = () => {
+        const updateEnd = (_) => {
             sourceBuffer.removeEventListener("updateend", updateEnd);
             sourceBuffer.timestampOffset = this.videoDuration;
 
